@@ -30,7 +30,7 @@ server:
   address: 0.0.0.0
 
 app:
-  defaultPhoneNumber: +996550150176
+  defaultPhoneNumber: +7(995)920-20-90
   feedbackRecipientEmail: znakonet@yandex.ru
   markup:
     percent: 20
