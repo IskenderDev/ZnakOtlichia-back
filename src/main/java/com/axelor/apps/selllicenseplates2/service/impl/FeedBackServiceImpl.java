@@ -6,6 +6,7 @@ import com.axelor.apps.selllicenseplates2.repository.FeedbackRepository;
 import com.axelor.apps.selllicenseplates2.service.EmailService;
 import com.axelor.apps.selllicenseplates2.service.FeedBackService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,8 @@ public class FeedBackServiceImpl implements FeedBackService {
 
     private final FeedbackRepository feedbackRepository;
     private final EmailService emailService;
+    @Value("${app.feedbackRecipientEmail}")
+    private String feedbackRecipientEmail;
 
     @Override
     public void createFeedback(FeedBackCreateRequest request) {
@@ -34,6 +37,6 @@ public class FeedBackServiceImpl implements FeedBackService {
                 request.getCarNumber(),
                 request.getFeedbackType());
 
-        emailService.sendFeedbackEmail("retreatpm@icloud.com", subject, body);
+        emailService.sendFeedbackEmail(feedbackRecipientEmail, subject, body);
     }
 }
