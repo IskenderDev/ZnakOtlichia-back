@@ -17,6 +17,7 @@ services:
       - ./data:/app/data
     networks:
       - app-network
+    restart: unless-stopped
 
   db:
     container_name: sell-license-plates-db
@@ -31,7 +32,7 @@ services:
       - postgres-data:/var/lib/postgresql/data
     networks:
       - app-network
-    restart: always
+    restart: unless-stopped
 
 networks:
   app-network:
