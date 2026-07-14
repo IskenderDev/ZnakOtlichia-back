@@ -83,20 +83,9 @@ public class CarNumberLotServiceImpl implements CarNumberLotService {
         return carNumberLotMapper.toListDto(carNumberLots);
     }
 
-  @Override
+ @Override
 public CarNumberLotDto getCarNumberLotById(Long id) {
-    CarNumberLot carNumberLot = findById(id);
-
-    if (Boolean.TRUE.equals(carNumberLot.getIsDeleted())
-            || Boolean.TRUE.equals(carNumberLot.getIsSold())
-            || !Boolean.TRUE.equals(carNumberLot.getIsConfirm())) {
-
-        throw new CarNumberLotNotFoundException(
-                "Номерной знак недоступен: " + id
-        );
-    }
-
-    return carNumberLotMapper.toDto(carNumberLot);
+    throw new RuntimeException("Я ДОШЕЛ ДО ЭТОГО МЕТОДА");
 }
 
     @Override
