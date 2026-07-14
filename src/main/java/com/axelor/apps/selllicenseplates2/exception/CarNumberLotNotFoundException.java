@@ -1,9 +1,12 @@
 package com.axelor.apps.selllicenseplates2.exception;
 
-import lombok.experimental.StandardException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.NoSuchElementException;
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class CarNumberLotNotFoundException extends RuntimeException {
 
-@StandardException
-public class CarNumberLotNotFoundException extends NoSuchElementException {
+    public CarNumberLotNotFoundException(String message) {
+        super(message);
+    }
 }
