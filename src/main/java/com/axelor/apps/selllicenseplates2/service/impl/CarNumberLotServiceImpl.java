@@ -25,6 +25,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
@@ -82,11 +85,18 @@ public class CarNumberLotServiceImpl implements CarNumberLotService {
         return carNumberLotMapper.toListDto(carNumberLots);
     }
 
-    @Override
-    public CarNumberLotDto getCarNumberLotById(Long id) {
-        CarNumberLot carNumberLot = findById(id);
-        return carNumberLotMapper.toDto(carNumberLot);
+   @Override
+public CarNumberLotDto getCarNumberLotById(Long id) {
+    CarNumberLot carNumberLot = findById(id);
+
+    if (Boolean.TRUE.equals(carNumberLot.getIsDeleted())
+            || Boolean.TRUE.equals(carNumberLot.getIsSold())
+            || !Boolean.TRUE.equals(carNumberLot.getIsConfirm())) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
+
+    return carNumberLotMapper.toDto(carNumberLot);
+}
 
     @Override
     public List<CarNumberLotDto> getMyCarNumberLots() {
