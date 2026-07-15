@@ -186,10 +186,15 @@ public CarNumberLotDto getCarNumberLotById(Long id) {
     }
 
     private CarNumberLot findById(Long id) {
-        return carNumberLotRepository.findById(id)
-                .orElseThrow(() -> new CarNumberLotNotFoundException("Номерной знак не найден с ID: " + id));
+    CarNumberLot lot = carNumberLotRepository.findById(id)
+            .orElseThrow(() -> new CarNumberLotNotFoundException("Номерной знак не найден с ID: " + id));
+
+    if (Boolean.TRUE.equals(lot.getIsDeleted()) || Boolean.TRUE.equals(lot.getIsSold())) {
+        throw new CarNumberLotNotFoundException("Номерной знак не найден с ID: " + id);
     }
 
+    return lot;
+}
     private CarNumberLot fromRequest(CarNumberLotCreateRequest request) {
         String fullNumber = request.getFirstLetter()
                 + request.getFirstDigit()
